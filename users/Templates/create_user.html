@@ -10,8 +10,14 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Salvar</button>
+        <!-- Vulnerabilidade: A linha {{ form.as_p }} renderiza todos os campos do modelo, incluindo campos sensíveis como 'is_admin'. Isso pode permitir que um atacante modifique dados que não deveriam ser acessíveis. -->
+
+        <!-- Mitigação: Para evitar a vulnerabilidade de Mass Assignment, é importante filtrar os campos que o usuário pode modificar. Em vez de renderizar todos os campos com {{ form.as_p }}, você pode explicitamente definir quais campos são permitidos. Exemplo: -->
+        
+        <!-- 
+        {{ form.username }} 
+        {{ form.email }}
+        -->
     </form>
 </body>
 </html>
-python manage.py createsuperuser
